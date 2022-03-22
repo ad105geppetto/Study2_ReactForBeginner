@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>    
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById('root');
+        function App() {
+            const [count, setCount] = React.useState(0)
+            // 위의 코드는 아래의 count와 setCount를 합한 것이다.
+            // 이 코드를 쓰기 위해서는 함수 안에서 변수와 함수를 만들 수 있기에
+            // App함수의 구현부에서 써준다.
+            // let count = 0;
+            // const setCount = () => {
+            //     count++;
+            //     rendering();
+            // }
+            // 아래처럼 쓸 수도 있지만 음.. distructuring을 하는게 보기에 좋다.
+            // const data = React.useState(0);
+            // const count = data[0];
+            // const setCount = data[1];
+
+            // reacTthr.js파일에서 쓰던 setCount함수와 여기서 쓰는 setCount함수는 다르다.
+            // 바로 useState라는 hook을 도입하면서 달라진 것이다.
+            // reactThr.js파일에서 쓰던 setCount함수는 이벤트리스너로 사용된 것이다.
+            // 반면 여기서 setCount함수는 count를 변경하면서 랜더링까지 할 수 있는 함수이다.
+            // 그래서 이벤트리스너인 onClick함수가 필요하다.
+            // 완전히 다르게 쓰이는 것이며, 여기서 쓰인 setCount함수가 코드의 재사용성이 더 높다.
+            function onClick() {
+                // 이제 setCount함수로 count를 변경하는 코드를 짜보자
+                // index.html을 확인하자.
+                setCount(9848453)
+            }
+
+            return(
+            <div>
+                <h3>This count is {count}</h3>
+                <button onClick={onClick}>Click me</button>
+            </div>
+            )
+
+        }
+        // Container컴포넌트는 아래와 같이 App컴포넌트로 변경한다.
+        ReactDOM.render(<App/>, root)
+    </script>
+</body>
+</html>

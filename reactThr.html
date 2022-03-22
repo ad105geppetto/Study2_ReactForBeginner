@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>    
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById('root');
+        let count = 0;
+        const setCount = () => {
+            count++;
+            rendering()
+        }
+        const rendering = () => {
+        // 둘째, 만약 UI를 업데이트하고 싶거나 사용자에게 변화를 보여주고 싶다면 render함수를 다시 호출하면 된다.
+        // 따라서 script태그의 마지막 줄에 처음 랜더링 될때 필요한 render함수를 썼다.
+        // render함수가 처음 호출될 때, 이 함수는 Container컴포넌트를 root div에 담아둘 것이다.
+        // 그리고 이 함수가 최초로 호출되면 Container함수가 호출되고
+        //  Container함수가 호출되면 React Element가 반환된다.
+        // 그런데 Container함수를 처음 호출했기에 count는 0이다.
+        // 하지만 이벤트 리스너를 등록해뒀기에 클릭 버튼을 누르고 땔때 count는 증가한다.
+        // 그리고 사용자에게 바뀐 데이터를 보여주기 위해 render함수를 다시 호출해야만 한다.
+        // 그리고 다시 render함수는 Container컴포넌트를 root에 담아둔다.
+        // 그러나 이번에는 Container컴포넌트가 바뀐 countr값을 가지고 update한다.
+        // 여기서 중요한 점은 render함수를 호출하면 Container컴포넌트가 다시 실행되니 윈도우의 전체화면이 리랜더링된다고 생각하기 쉽다.
+        // 하지만 React는 전체화면을 리랜더링하지 않고 바뀌는 부분만 다시 생성할 수 있게 도와준다
+        // 이것이 바로 React를 쓰는 이유이다. => SPA
+            ReactDOM.render(<Container/>, root)
+        }
+        const Container = () => {
+            return(
+        // 첫째, 컴포넌트나 JSX에 변수를 추가하고 싶을땐 {count}처럼 아래의 중괄호를 사용하면 된다.
+            <div>
+                <h3>This count is {count}</h3>
+                <button onClick={setCount}>Click me</button>
+            </div>
+            )
+        }
+        rendering()
+    </script>
+    <!-- 이 방법으로도 리액트를 사용할 수 있지만 좀 더 최고의 방법으로 리액트를 사용해보자 -->
+    <!-- reactFourth.html을 확인하자 -->
+</body>
+</html>

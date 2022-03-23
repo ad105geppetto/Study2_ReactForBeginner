@@ -14,7 +14,11 @@
                 // setCount함수의 인수로 count에 1을 더한 값을 주면된다.
                 // 물론 count ++를 작성하고 setCount함수의 인수로 count를 줘도 된다.
                 // 그러나 count ++를 쓰려면 let [count, setCount]로 let으로 키워드를 써야한다.
-                setCount(count+1)
+                // 이렇게 변수를 바로 쓸 수도 있지만 안전한 방법은 아니다.
+                // setCount(count+1)
+                // 이렇게 함으로서 확실히 count를 보장받을 수 있다.
+                // 안전성이 보장된다는데 왜 그런지는 잘 모르겠다.
+                setCount((count)=>{return count+1})
             }
 
             return(

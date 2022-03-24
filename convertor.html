@@ -6,7 +6,8 @@
     <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
-        function App() {
+        {/*지금부터 분할하는 과정을 "분할 정복(divide and conquer)라고 한다."*/}
+        function MinutesToHours() {
             const [amount, setAmount] = React.useState(0)
             const [flipped, setFlipped] = React.useState(false)
             const onChange = (e) => {
@@ -23,20 +24,76 @@
                 // 변수 flipped를 바로 쓰는 것보다 함수를 한 번 더 정의하여 사용하는게 좋다.
                 setFlipped((current) => !current)
             }
+
+            return (
+                <div>
+                    {/*라벨을 쓰는 이유는 input의 정보를 표현하기 위해*/}
+                    <div>
+                        <label htmlFor="minutes">Minutes</label>
+                        <input id="minutes" value={flipped ? amount * 60 : amount} placeholder="Minutes" type="number" onChange={onChange} disabled={flipped}></input>
+                    </div>
+                    <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input id="hours" value={flipped ? amount : Math.round(amount / 60)} placeholder="Hours" type="number" onChange={onChange} disabled={!flipped}></input>
+                    </div>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onFlip}>Flipped</button>
+                </div>
+            )
+        }
+        function KmToMiles() {
+            const [amount, setAmount] = React.useState(0);
+            const [isFalse, setIsFalse] = React.useState(false);
+
+            function onChange(e) {
+                setAmount(e.target.value)
+            }
+
+            function onInvert() {
+                setIsFalse((current) => !current)
+                reset()
+            }
+
+            function reset() {
+                setAmount(0)
+            }
+
+            return (
+                <>
+                    <div>
+                        <label htmlFor="miles">miles</label>
+                        <input id="miles" value={isFalse ? amount / 1.609344 : amount} type="number" onChange={onChange} disabled={isFalse}/>
+                    </div>
+                    <div>
+                        <label htmlFor="killo">killo</label>
+                        <input id="killo" value={isFalse ? amount : amount * 1.609344} type="number" onChange={onChange} disabled={!isFalse}/>
+                    </div>
+                    <button onClick={reset}>reset</button>
+                    <button onClick={onInvert}>{isFalse ? 'km to miles' : 'miles to km'}</button>
+                </>
+            )
+        }
+        function App() {
+            const [index, setIndex] = React.useState('xx')
+            const onSelect = (e) => {
+                setIndex(e.target.value)
+            }
+            // App 컴포넌트를 기준으로 다른 컴포넌트를 보여준다.
+            // 단, 둘 중 하나만 보여주도록 하는데 이때 쓰이는 HTML tag는 <select>다.
+            // 이것은 React에서 쓰는 만들어진 태그가 아니다. 그도 그럴것이 첫 스펠링이 소문자다.
             return(
             <div>
                 <h1>Super Convertor</h1>
-                {/*라벨을 쓰는 이유는 input의 정보를 표현하기 위해*/}
-                <div>
-                    <label htmlFor="minutes">Minutes</label>
-                    <input id="minutes" value={flipped ? amount * 60 : amount} placeholder="Minutes" type="number" onChange={onChange} disabled={flipped}></input>
-                </div>
-                <div>
-                <label htmlFor="hours">Hours</label>
-                <input id="hours" value={flipped ? amount : Math.round(amount / 60)} placeholder="Hours" type="number" onChange={onChange} disabled={!flipped}></input>
-                </div>
-                <button onClick={reset}>Reset</button>
-                <button onClick={onFlip}>Flipped</button>
+                <select value={index} onChange={onSelect}>
+                    {/*option의 value 타입은 string이므로 state의 초기상태의 타입도 string이어야 한다.*/}
+                    <option value="xx">Select your units</option>
+                    <option value="0">Minutes & Hours</option>
+                    <option value="1">Km & Miles</option>
+                </select>
+                <hr />
+                {index === "xx" ? "Please select your units" : null}
+                {index === "0" ? <MinutesToHours /> : null}
+                {index === "1" ? <KmToMiles /> : null}
             </div>
             )
         }

@@ -5,6 +5,8 @@
     <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>    
     <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
     <script type="text/babel">
         function Btn({text, onClick, fontSize=12}) {
             console.log(text)
@@ -30,6 +32,10 @@
             console.log(e.target.innerText)
         }
 
+        Btn.propTypes = {
+            text: PropTypes.string.isRequired,
+            fontSize: PropTypes.number
+        }
         function App() {
             return(
             <div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>    
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        function Btn({text, onClick, fontSize=12}) {
+            console.log(text)
+            return(
+                <button 
+                    onClick={onClick}
+                    style={{
+                        backgroundColor: "tomato",
+                        color: "white",
+                        padding: "10px 20px",
+                        border: 0,
+                        borderRadius: 10,
+                        fontSize: 10,
+                        cursor: "pointer",
+                        fontSize,
+                    }}
+                    >{text}
+                </button>
+            )
+        }
+
+        function onClick(e) {
+            console.log(e.target.innerText)
+        }
+
+        function App() {
+            return(
+            <div>
+                <Btn text="Click" onClick={onClick} fontSize={18}/>
+                <Btn text="Reset" onClick={onClick}/>
+            </div>
+            )
+        }
+        const root = document.getElementById('root');
+        ReactDOM.render(<App/>, root)
+    </script>
+</body>
+</html>

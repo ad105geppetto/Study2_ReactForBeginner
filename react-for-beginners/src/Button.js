@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import styled from "./Button.module.css"
 
-const Button = ({ text }) => {
+const Button = ({ text, isClick, onIsClick}) => {
     return (
-        <button className={styled.btn}>{text}</button>
+        <button className={styled.btn} onClick={() => onIsClick(!isClick)}>{text}</button>
     )
 }
 
